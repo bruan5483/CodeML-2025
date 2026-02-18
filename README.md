@@ -37,11 +37,11 @@ This project leverages this insight by:
 
 ```
 ├── notebooks/
-│   ├── CodeML_BERT.ipynb          # Main model: FinBERT + XGBoost pipeline
+│   ├── final_submission.ipynb     # 🏆 Winning submission - Multi-stage pipeline
+│   ├── CodeML_BERT.ipynb          # FinBERT + XGBoost pipeline
 │   ├── CodeML_LLM.ipynb           # LLM-based sentiment experiments
 │   ├── CodeML_QWEN.ipynb          # QWEN model experiments
-│   ├── CodeML_headline_filter.ipynb # News filtering and preprocessing
-│   └── final_submission.ipynb     # Final submission notebook
+│   └── CodeML_headline_filter.ipynb # News filtering and preprocessing
 ├── scraper/
 │   ├── main_scraper.py            # Primary news scraping script
 │   ├── gdelt_scraper.py           # GDELT news source scraper
@@ -60,25 +60,37 @@ This project leverages this insight by:
 ## 📊 Methodology
 
 ### 1. Data Collection
-- Scraped **70,000+ news headlines** from energy and financial news sources
+- Built a **comprehensive news scraper** to collect **70,000+ headlines** across multiple years
+- Sources include GDELT, NewsAPI, and custom energy news scrapers
 - Filtered to retain only energy- and economy-related content
-- Date range: 2020–2024
+- Date range: 2014–2024
 
 ### 2. Sentiment Analysis
-- Used **FinBERT** (ProsusAI/finbert) for financial sentiment classification
-- Aggregated daily sentiment scores (positive, negative, neutral)
-- Computed rolling sentiment averages
+- Used **FinBERT** (yiyanghkust/finbert-tone) for financial sentiment classification
+- Extracted **three sentiment scores** per article: positive, negative, neutral
+- Aggregated daily sentiment scores with article counts
 
-### 3. Feature Engineering
-- **Lagged prices**: 1-day, 7-day, 30-day lags
-- **Rolling statistics**: Moving averages, standard deviation
-- **Volatility indicators**: Price momentum, rate of change
-- **Seasonality**: Day of week, month encoding
+### 3. Multi-Stage Feature Engineering (Winning Approach)
+Our winning approach combined **sentiment features** with **time-series features**:
+
+**Sentiment Features:**
+- Daily aggregated sentiment (neg, neu, pos)
+- Sentiment momentum (lagged sentiment scores)
+- Article volume per day
+
+**Price Features:**
+- Lagged prices (1-day, 5-day)
+- Rolling statistics (5-day mean, std)
+- Daily returns / price momentum
+
+**Seasonality Features:**
+- Cyclical month encoding (sin/cos transformation)
 
 ### 4. Model Training
 - **XGBoost Regressor** with Optuna hyperparameter optimization
-- Cross-validation with time-series split
-- Feature importance analysis
+- 3-fold cross-validation for robust evaluation
+- Optimized: n_estimators, learning_rate, max_depth, gamma
+- Final scoring metric: `1 / (1 + RMSE)`
 
 ---
 
@@ -86,8 +98,8 @@ This project leverages this insight by:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/codeml-natural-gas.git
-cd codeml-natural-gas
+git clone https://github.com/bruan5483/Code-ML.git
+cd Code-ML
 
 # Create virtual environment
 python -m venv venv
@@ -125,12 +137,12 @@ python main_scraper.py
 
 | Name | Role | Links |
 |------|------|-------|
-| **Peizhe Guan** | ML Engineering | [LinkedIn](https://linkedin.com) |
-| **Adrian Luk** | Data Engineering | [LinkedIn](https://linkedin.com) |
-| **Sivabalan Sandh Muthurajan** | NLP & Sentiment | [LinkedIn](https://linkedin.com) |
-| **Bryant Ruan** | Full Stack & Integration | [LinkedIn](https://linkedin.com) |
+| **Peizhe Guan** | ML Engineering | [LinkedIn](https://www.linkedin.com/in/peizhe-guan/) |
+| **Adrian Luk** | Data Engineering | [LinkedIn](https://www.linkedin.com/in/adrian-ctluk/) |
+| **Sivabalan Sandh Muthurajan** | NLP & Sentiment | [LinkedIn](https://www.linkedin.com/in/sivabalan-muthurajan/) |
+| **Bryant Ruan** | News Scraper & Multi-Stage Pipeline Architecture | [LinkedIn](https://www.linkedin.com/in/bryant-ruan/) |
 
-*University of Waterloo students — Code-ML 2025*
+*University of Waterloo & McGill University — Code-ML 2025*
 
 ---
 
