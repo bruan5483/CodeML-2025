@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+Rules:
+- Before executing any Python-related commands or running code from a Python package, first check if a virtual environment exists by looking for a 'venv' directory in the current project. If it exists, activate it by running "source ./venv/bin/activate" before proceeding with the command.
+- When installing python packages or adding to requirements.txt, you must use web search or pip to ensure it is the latest version unless otherwise specified by other library version requirements..

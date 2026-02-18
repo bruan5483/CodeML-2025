@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+Rules:
+- When creating a feature, write a concise overview of (how it works, how to use/test) in an appropriate file in ./docs/{feature}.md or another existing docs folder.
+- Update README.md files as you implement new features/functions or update existing ones, ensure that README is up to date.

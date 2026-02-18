@@ -1,0 +1,6 @@
+pandas
+requests
+beautifulsoup4
+lxml
+deep-translator
+google-cloud-aiplatform
